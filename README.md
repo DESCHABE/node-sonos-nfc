@@ -1,4 +1,6 @@
-forked from https://github.com/ryanolf/node-sonos-nfc, the follwing introduction has not been changed:
+forked from https://github.com/ryanolf/node-sonos-nfc, made several changes to work locally in my environment and some adjustments to fit to my needs.
+
+The follwing introduction has not been changed:
 
 # Install
 
