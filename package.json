@@ -5,11 +5,9 @@
   "main": "sonos_nfc.js",
   "type": "module",
   "scripts": {
-    "test": "jest",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start-all": "concurrently --kill-others \"npm start\" \"npm explore sonos-http-api -- npm start\"",
-    "start": "node index.js",
-    "prepare": "husky install",
-    "format": "prettier --write . && git add -A ."
+    "start": "node sonos_nfc.js"
   },
   "author": "Ryan Olf",
   "license": "MIT",
@@ -18,16 +16,9 @@
     "nfc-pcsc": "^0.8.0",
     "nfccard-tool": "^0.1.1",
     "node-fetch": "^2.6.1",
+    "rpi-gpio": "^2.1.7",
+    "rpi-gpio-buttons": "^2.0.1",
+    "rpio": "^2.4.2",
     "sonos-http-api": "jishi/node-sonos-http-api"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.14.8",
-    "@babel/preset-env": "^7.14.9",
-    "babel-jest": "^27.0.6",
-    "babel-plugin-transform-amd-to-commonjs": "^1.4.0",
-    "husky": "^7.0.1",
-    "jest": "^27.0.6",
-    "jest-fetch-mock": "^3.0.3",
-    "prettier": "^2.3.2"
   }
 }
