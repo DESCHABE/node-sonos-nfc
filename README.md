@@ -1,6 +1,6 @@
-forked from https://github.com/ryanolf/node-sonos-nfc, made several changes to work locally in my environment and some adjustments to fit to my needs.
+forked from https://github.com/ryanolf/node-sonos-nfc, made several changes to work locally in my environment (drive LEDs and Buttons of my local Box) and some adjustments to fit to my needs (max_volume, pause and play when a card is removed and reattached).
 
-The follwing introduction has not been changed:
+The following introduction has not been changed:
 
 # Install
 
