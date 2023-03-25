@@ -21,7 +21,8 @@ console.log("Control your Sonos with NFC cards. Searching for PCSC-compatible NF
 //27 <-
 //22 ->
 let buttons = new RPiGPIOButtons({
-    pins: [4, 17, 27, 22]
+	pins: [4, 17, 27, 22],
+	timing: { debounce: 220 }
 });
 
 //GPIO 27 22 = 13/15
