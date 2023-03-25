@@ -56,34 +56,45 @@ buttons
   switch(type){
     case 'released':
 	var playerState = await get_sonos_room_information("state")
+	//example state:
+	/*{"volume":6,"mute":false,"equalizer":{"bass":0,"treble":0,"loudness":true,"speechEnhancement":true,"nightMode":true},"currentTrack":{"artist":"Architects","title":"Libertine","album":"For Those That Wish To Exist","albumArtUri":"/getaa?s=1&u=x-sonos-spotify%3aspotify%253atrack%253a5xTpvgLLS9uL93Riwe4otA%3fsid%3d9%26flags%3d8232%26sn%3d5","duration":241,"uri":"x-sonos-spotify:spotify%3atrack%3a5xTpvgLLS9uL93Riwe4otA?sid=9&flags=8232&sn=5","trackUri":"x-sonos-spotify:spotify%3atrack%3a5xTpvgLLS9uL93Riwe4otA?sid=9&flags=8232&sn=5","type":"track","stationName":"","absoluteAlbumArtUri":"http://10.84.32.26:1400/getaa?s=1&u=x-sonos-spotify%3aspotify%253atrack%253a5xTpvgLLS9uL93Riwe4otA%3fsid%3d9%26flags%3d8232%26sn%3d5"},"nextTrack":{"artist":"","title":"","album":"","albumArtUri":"","duration":0,"uri":""},"trackNo":1,"elapsedTime":0,"elapsedTimeFormatted":"00:00:00","playbackState":"STOPPED","playMode":{"repeat":"none","shuffle":false,"crossfade":false}}
+	*/
 	switch(pin){
 	    case 4:
-		if (playerState['volume'] <= max_volume){
-			await process_sonos_command('command:volume/+3')
-		}
-	    break;
+			if (playerState['volume'] <= max_volume){
+				console.log('old volume: ' + playerState['volume'])
+				await process_sonos_command('command:volume/+3')
+				playerState = await get_sonos_room_information("state")
+				console.log('new volume: ' + playerState['volume'])
+			}else{
+				console.log('max volume (' + max_volume + ') reached - volume will not be increased.')
+			}
+			break;
 	    case 17:
-		await process_sonos_command('command:volume/-3')
+			console.log('old volume: ' + playerState['volume'])
+			await process_sonos_command('command:volume/-3')
+			playerState = await get_sonos_room_information("state")
+			console.log('new volume: ' + playerState['volume'])
 	    break;
 	    case 27:
-		//only possible if player is playing and queue is more than 1 and title is not 1 in queue
-		var queue = await get_sonos_room_information("queue")
-		console.log('check conditions')
-		console.log('current track: ' + playerState['currentTrack']['title'] + ',first track in queue: ' + queue[0]['title'])
-		console.log('queue length: ' +Object.keys(queue).length)
-		console.log('player state: ' + playerState['playbackState'])
-		if (playerState['currentTrack']['title'] != queue[0]['title'] && Object.keys(queue).length > 1 && playerState['playbackState'] == 'PLAYING'){
-			await process_sonos_command('command:previous')
-		}
+			//only possible if player is playing and queue is more than 1 and title is not 1 in queue
+			var queue = await get_sonos_room_information("queue")
+			console.log('check conditions')
+			console.log('current track: ' + playerState['currentTrack']['title'] + ',first track in queue: ' + queue[0]['title'])
+			console.log('queue length: ' +Object.keys(queue).length)
+			console.log('player state: ' + playerState['playbackState'])
+			if (playerState['currentTrack']['title'] != queue[0]['title'] && Object.keys(queue).length > 1 && playerState['playbackState'] == 'PLAYING'){
+				await process_sonos_command('command:previous')
+			}
 	    break;
 	    case 22:
-		//only possible if player is playing and next track available
-		console.log('check conditions')
-		console.log('next track: ' + playerState['nextTrack']['artist'])
-		console.log('player state: ' + playerState['playbackState'])
-		if (playerState['nextTrack']['artist'] != '' && playerState['playbackState'] == 'PLAYING'){
-			await process_sonos_command('command:next')
-		}
+			//only possible if player is playing and next track available
+			console.log('check conditions')
+			console.log('next track: ' + playerState['nextTrack']['artist'])
+			console.log('player state: ' + playerState['playbackState'])
+			if (playerState['nextTrack']['artist'] != '' && playerState['playbackState'] == 'PLAYING'){
+				await process_sonos_command('command:next')
+			}
 	    break;
 	  } 
 	  break;
