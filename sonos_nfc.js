@@ -239,16 +239,10 @@ nfc.on('error', async err => {
     }  
 })
 
-function Sleep(milliseconds) {
-    return new Promise(resolve => setTimeout(resolve, milliseconds));
-   }
-
-//wait a litte until sonos-api is available and output some information
 try{
-    await Sleep(5000) 
     let room = await get_available_sonos_room()
-    console.log('playing music on available room:' + room)
+    console.log('playing music on available room: ' + room)
     LED_power.writeSync(1);
 }catch (err) {
-    console.error(err.toString())
+    console.error('error in get_available_sonos_room: ' + err.toString())
 }  
